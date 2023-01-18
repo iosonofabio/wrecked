@@ -2,12 +2,29 @@
 layout: default
 ---
 
+
 <div class="home">
   {%- if page.title -%}
     <h1 class="page-heading">{{ page.title }}</h1>
   {%- endif -%}
 
   {{ content }}
+
+  <div id="cover">
+    <form name="searchCardForm" action="#" onsubmit="searchCard();">
+      <div class="tb">
+        <div class="td">
+        <!-- The following tag is input for the text input field which is used as a seach field on a web page -->
+        <input type="text" name="searchCardText" placeholder="Card number" id="searchCardInput" required></div>
+        <div class="td" id="s-cover">
+          <button type="submit">
+            <div id="s-circle"> </div>
+            <span> </span>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
 
   {%- if site.posts.size > 0 -%}
     <h2 class="post-list-heading">{{ page.list_title | default: "News" }}</h2>
@@ -32,3 +49,19 @@ layout: default
   {%- endif -%}
 
 </div>
+
+<script>
+function searchCard() {
+  console.log("In the function");
+  let cardNumber = document.searchCardForm.searchCardText.value;
+
+  // Validation?
+  console.log(cardNumber);
+  // Seems like if an nonexistent number is used one goes back to the index, good
+
+  // Go there
+  console.log("Out of the function");
+  window.location.href = '/cards/' + cardNumber + '.html'; //relative to domain
+
+}
+</script>

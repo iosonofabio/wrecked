@@ -1,0 +1,143 @@
+*
+{
+    outline: none;
+}
+/* The following tag selector form uses one property for specifying the height of a form. */
+
+form
+{
+    height: 30px;
+}
+/* The following tag selector input use the different properties for specifying the text field. */
+
+input[type="text"]
+{
+    width: 100%;
+    height: 35px;
+    font-size: 35px;
+    line-height: 1;
+}
+/* The following tag selector uses the color of placeholder as orange for the input text field. */
+input[type="text"]::placeholder
+{
+    color: gold;
+}
+
+.tb
+{
+    display: table;
+    width: 100%;
+}
+.td
+{
+    display: table-cell;
+    vertical-align: middle;
+}
+/* The following tag selector uses the different properties for specifying all the inputs and buttons used in the body tag in this html file. */
+
+input, button
+{
+    color: gold;
+    font-family: Arial;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    background-color: transparent;
+}
+/* the following id selector cover uses the different attribute which are used between the body tag */
+#cover
+{
+    position: block;
+    width: 350px;
+    padding: 15px;
+    margin: 0 0 0 0;
+    background-color: navy;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px navy, 0 0 0 20px #ffffffeb;
+    transform: scale(0.6);
+}
+/* The following tag selector button uses the different proprties for specifying the button on a web page. */
+button
+{
+    position: relative;
+    display: block;
+    width: 44px;
+    height: 40px;
+    cursor: pointer;
+}
+/* The following id selector uses the different properties for searching button */ 
+#s-circle
+{
+    position: relative;
+    top: -15px;
+    left: 5px;
+    width: 13px;
+    height: 13px;
+    margin-top: 0;
+    border-width: 15px;
+    border: 6px solid gold;
+    background-color: transparent;
+    border-radius: 50%;
+    transition: 0.5s ease all;
+}
+button span
+{
+    position: absolute;
+    top: 28px;
+    left: 11px;
+    display: block;
+    width: 40px;
+    height: 10px;
+    background-color: transparent;
+    border-radius: 5px;
+    transform: rotateZ(52deg);
+    transition: 0.5s ease all;
+}
+button span:before, button span:after
+{
+    content: '';
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    width: 35px;
+    height: 10px;
+    background-color: gold;
+    border-radius: 5px;
+    transform: rotateZ(0);
+    transition: 0.5s ease all;
+}
+#s-cover:hover #s-circle
+{
+    top: -4px;
+    width: 35px;
+    height: 8px;
+    border-width: 0;
+    background-color: gold;
+    border-radius: 20px;
+}
+/* The following hover effect use the different properties when you take mouse to that element where thr s-cover is selector is used. */
+#s-cover:hover span
+{
+    top: 50%;
+    left: 46px;
+    width: 15px;
+    margin-top: -9px;
+    transform: rotateZ(0);
+}
+#s-cover:hover button span:before
+{
+    bottom: 8px;
+    transform: rotateZ(52deg);
+}
+#s-cover:hover button span:after
+{
+    bottom: -8px;
+    transform: rotateZ(-52deg);
+}
+#s-cover:hover button span:before, #s-cover:hover button span:after
+{
+    right: 6px;
+    width: 30px;
+    background-color: gold;
+}
+
