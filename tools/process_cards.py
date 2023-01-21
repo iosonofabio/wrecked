@@ -23,6 +23,48 @@ categories: cards
     return lines
 
 
+def package_cards_js(cards, fn_js):
+    '''Store cards in a JavaScript object for frontend manipulation'''
+    with open(fn_js, 'wt') as fout:
+        indent = 0
+        fout.write('wreckedStorage = {\n')
+        indent += 2
+
+        # Card text
+        fout.write(' ' * indent + '"text": {\n')
+        indent += 2
+        for cardname, card_text in cards.items():
+            paragraphs = []
+            for par in card_text.split('\n'):
+                if par == '':
+                    continue
+                if '<script>' in par:
+                    continue
+                # Escape - there must be a better way ;-)
+                par = par.replace('"', '\\"')
+                paragraphs.append(par)
+            fout.write(
+                    ' ' * indent + f'"{cardname}": ['
+            )
+            fout.write(','.join([f'"{p}"' for p in paragraphs]))
+            fout.write('],\n')
+
+        indent -= 2
+        fout.write(' ' * indent + '},\n')
+
+        # Tokens
+        tokens = ['start', 'gyroscope', 'thermallance', 'fin', 'heliox']
+        fout.write(' ' * indent + "tokens: {\n")
+        indent += 2
+        for token in tokens:
+            fout.write(' ' * indent + f'{token}: false,\n')
+        indent -= 2
+        fout.write(' ' * indent + '},\n')
+
+        indent -= 2
+        fout.write(' ' * indent + '}\n')
+
+
 if __name__ == '__main__':
 
     fdn_root = pathlib.Path(__file__).parent / '..'
@@ -42,22 +84,23 @@ if __name__ == '__main__':
                 card_text = []
             card_name = partext
         elif card_name is not None:
-            if partext.startswith('R: '):
-                partext = '---\n**R:**' + partext[2:]+'\n\n---'
+            #if partext.startswith('R: '):
+            #    partext = '---\n**R:**' + partext[2:]+'\n\n---'
             card_text.append(partext)
 
     fdn_src = fdn_root / 'cards'
 
-    shutil.rmtree(fdn_src)
-    os.mkdir(fdn_src)
+    package_cards_js(cards, fdn_root / 'assets' / 'wreckedStorage.js')
 
-    for name, text in cards.items():
-        with open(fdn_src / f'{name}.md', 'wt') as f:
-            f.write(make_header(name))
-            f.write(text)
+    #shutil.rmtree(fdn_src)
+    #os.mkdir(fdn_src)
+    #for name, text in cards.items():
+    #    with open(fdn_src / f'{name}.md', 'wt') as f:
+    #        f.write(make_header(name))
+    #        f.write(text)
 
-            # Inject JS if necessary
-            if os.path.isfile(fdn_root / 'assets' / 'card_scripts' / f'{name}.js'):
-                f.write('\n\n')
-                f.write('<script type="module" src="/assets/js.cookie.min.mjs"></script>\n')
-                f.write(f'<script type="module" src="/assets/card_scripts/{name}.js"></script>\n')
+    #        # Inject JS if necessary
+    #        if os.path.isfile(fdn_root / 'assets' / 'card_scripts' / f'{name}.js'):
+    #            f.write('\n\n')
+    #            f.write('<script type="module" src="/assets/js.cookie.min.mjs"></script>\n')
+    #            f.write(f'<script type="module" src="/assets/card_scripts/{name}.js"></script>\n')

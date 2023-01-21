@@ -1,3 +1,11 @@
+.cardTextRule
+{
+    border: 1px solid gold;
+    border-radius: 7px;
+    background-color: rgba(0, 0, 128, 0.3);
+    padding: 5px;
+}
+
 #searchACardText
 {
     text-align: center;
@@ -145,4 +153,3 @@ button span:before, button span:after
     width: 30px;
     background-color: gold;
 }
-

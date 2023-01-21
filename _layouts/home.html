@@ -11,9 +11,8 @@ layout: default
   <div id="searchACardText">
     {{ content }}
   </div>
-
   <div id="cover">
-    <form name="searchCardForm" action="#" onsubmit="searchCard();">
+    <form id="searchCardForm" action="javascript:void(0);">
       <div class="tb">
         <div class="td">
         <!-- The following tag is input for the text input field which is used as a seach field on a web page -->
@@ -28,20 +27,20 @@ layout: default
     </form>
   </div>
 
+  <div id="cardApp">
+    <header class="post-header">
+      <h1 id="cardName" class=post-title"></h1>
+    </header>
+    <div id="cardText" class="post-content">
+    </div>
+  </div>
+
 </div>
 
+<script src="/assets/wreckedStorage.js"></script>
+<script src="/assets/wreckedLogic.js"></script>
 <script>
-function searchCard() {
-  console.log("In the function");
-  let cardNumber = document.searchCardForm.searchCardText.value;
-
-  // Validation?
-  console.log(cardNumber);
-  // Seems like if an nonexistent number is used one goes back to the index, good
-
-  // Go there
-  console.log("Out of the function");
-  window.location.href = '/cards/' + cardNumber + '.html'; //relative to domain
-
-}
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("searchCardForm").setAttribute("onSubmit", "onSearchCard();");
+});
 </script>
