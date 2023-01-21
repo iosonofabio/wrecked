@@ -1,14 +1,24 @@
+.page-content {
+    background-color: rgba(0, 0, 80, 0.9);
+    color: gold;
+}
+
 .cardTextRule
 {
     border: 1px solid gold;
     border-radius: 7px;
-    background-color: rgba(0, 0, 128, 0.3);
+    background-color: rgba(0, 0, 150, 0.5);
     padding: 5px;
 }
 
 #searchACardText
 {
     text-align: center;
+}
+
+#cardName
+{
+    font-weight: 500;
 }
 
 *
@@ -66,7 +76,7 @@ input, button
     padding: 15px;
     background-color: navy;
     border-radius: 12px;
-    box-shadow: 0 10px 40px navy, 0 0 0 20px #ffffffeb;
+    box-shadow: 0 10px 40px navy, 0 0 0 20px rgba(0, 0, 128, 0.2);
     transform: scale(0.6);
 }
 /* The following tag selector button uses the different proprties for specifying the button on a web page. */
