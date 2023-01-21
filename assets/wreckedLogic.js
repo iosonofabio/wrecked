@@ -56,6 +56,25 @@ function validateCardNumber(cardNumber) {
   return validationResult;
 }
 
+
+function swapCardWithTransition(cardNumber, cardTextInnerHTML) {
+  let delay = 0;
+  var cardApp = document.getElementById("cardApp");
+  let currentCard = document.getElementById("cardName").innerHTML;
+  if (currentCard != '') {
+    // Randomize delay for some spooky effect, except on first card
+    delay += 500 + 1500 * Math.random();
+    cardApp.style.opacity = '0';
+  }
+
+  setTimeout(function() {
+    document.getElementById("cardName").innerHTML = cardNumber;
+    document.getElementById("cardText").innerHTML = cardTextInnerHTML;
+    cardApp.style.opacity = '1';
+  }, delay);
+}
+
+
 function onSearchCard() {
   let cardNumber = document.getElementById("searchCardForm").searchCardText.value;
 
@@ -89,9 +108,9 @@ function onSearchCard() {
   }
   cardTextInnerHTML = cardTextInnerHTML.join('\n');
 
+
   // Change the card title and text
-  document.getElementById("cardName").innerHTML = cardNumber;
-  document.getElementById("cardText").innerHTML = cardTextInnerHTML;
+  swapCardWithTransition(cardNumber, cardTextInnerHTML);
 
   // Update tokens
   updateTokens(cardNumber);

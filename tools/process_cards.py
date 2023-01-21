@@ -61,6 +61,9 @@ def package_cards_js(cards, fn_js):
         indent -= 2
         fout.write(' ' * indent + '},\n')
 
+        # Current card
+        fout.write(' ' * indent + "currentCard: 'none',\n")
+
         indent -= 2
         fout.write(' ' * indent + '}\n')
 
@@ -91,16 +94,3 @@ if __name__ == '__main__':
     fdn_src = fdn_root / 'cards'
 
     package_cards_js(cards, fdn_root / 'assets' / 'wreckedStorage.js')
-
-    #shutil.rmtree(fdn_src)
-    #os.mkdir(fdn_src)
-    #for name, text in cards.items():
-    #    with open(fdn_src / f'{name}.md', 'wt') as f:
-    #        f.write(make_header(name))
-    #        f.write(text)
-
-    #        # Inject JS if necessary
-    #        if os.path.isfile(fdn_root / 'assets' / 'card_scripts' / f'{name}.js'):
-    #            f.write('\n\n')
-    #            f.write('<script type="module" src="/assets/js.cookie.min.mjs"></script>\n')
-    #            f.write(f'<script type="module" src="/assets/card_scripts/{name}.js"></script>\n')

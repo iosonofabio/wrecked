@@ -4,6 +4,12 @@
     color: gold;
 }
 
+#cardApp
+{
+ transition: 0.5s ease all;
+ opacity: 0;
+}
+
 .cardTextRule
 {
     border: 1px solid gold;
