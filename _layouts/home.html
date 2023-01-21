@@ -8,7 +8,9 @@ layout: default
     <h1 class="page-heading">{{ page.title }}</h1>
   {%- endif -%}
 
-  {{ content }}
+  <div id="searchACardText">
+    {{ content }}
+  </div>
 
   <div id="cover">
     <form name="searchCardForm" action="#" onsubmit="searchCard();">

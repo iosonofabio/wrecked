@@ -43,7 +43,7 @@ if __name__ == '__main__':
             card_name = partext
         elif card_name is not None:
             if partext.startswith('R: '):
-                partext = '**R:**' + partext[2:]
+                partext = '---\n**R:**' + partext[2:]+'\n\n---'
             card_text.append(partext)
 
     fdn_src = fdn_root / 'cards'
