@@ -61,8 +61,8 @@ def package_cards_js(cards, fn_js):
         indent -= 2
         fout.write(' ' * indent + '},\n')
 
-        # Current card
-        fout.write(' ' * indent + "currentCard: 'none',\n")
+        # Number of cards seen
+        fout.write(' ' * indent + "numberCardsSeen: 0,\n")
 
         indent -= 2
         fout.write(' ' * indent + '}\n')

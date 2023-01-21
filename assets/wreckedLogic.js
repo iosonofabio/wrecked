@@ -63,7 +63,8 @@ function swapCardWithTransition(cardNumber, cardTextInnerHTML) {
   let currentCard = document.getElementById("cardName").innerHTML;
   if (currentCard != '') {
     // Randomize delay for some spooky effect, except on first card
-    delay += 500 + 1500 * Math.random();
+    let randomDelay = 1500 * (1.0 - Math.min(20, wreckedStorage['numberCardsSeen']) / 20);
+    delay += 500 + randomDelay * Math.random();
     cardApp.style.opacity = '0';
   }
 
@@ -71,20 +72,25 @@ function swapCardWithTransition(cardNumber, cardTextInnerHTML) {
     document.getElementById("cardName").innerHTML = cardNumber;
     document.getElementById("cardText").innerHTML = cardTextInnerHTML;
     cardApp.style.opacity = '1';
+    // Reduce the randomization over time, to make the experience less
+    // frustrating as you go on
+    wreckedStorage['numberCardsSeen'] += 1;
   }, delay);
 }
 
 
 function onSearchCard() {
-  let cardNumber = document.getElementById("searchCardForm").searchCardText.value;
+  let cardForm = document.getElementById("searchCardForm")
+  let cardNumber = cardForm.searchCardText.value;
 
   // Reset field
-  document.getElementById("searchCardForm").searchCardText.value = "";
+  cardForm.searchCardText.value = "";
 
   // Validate card number
   let validationResult = validateCardNumber(cardNumber);
   if (validationResult['valid'] == false) {
     alert("Type a valid 3-digit card number");
+    return;
   }
   cardNumber = validationResult['cardNumber'];
   cardText = validationResult['cardText'];
