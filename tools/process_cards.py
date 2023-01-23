@@ -53,7 +53,8 @@ def package_cards_js(cards, fn_js):
         fout.write(' ' * indent + '},\n')
 
         # Tokens
-        tokens = ['start', 'gyroscope', 'thermallance', 'fin', 'heliox']
+        tokens = ['start', 'gyroscope', 'thermallance', 'fin', 'heliox',
+                  'lower']
         fout.write(' ' * indent + "tokens: {\n")
         indent += 2
         for token in tokens:
@@ -68,6 +69,17 @@ def package_cards_js(cards, fn_js):
         fout.write(' ' * indent + '}\n')
 
 
+def is_card_title(para):
+    '''Determine if a paragraph is a card title without a whitelist'''
+    if para.isdigit():
+        return True
+
+    if para.startswith('L') and len(para) > 1 and para[1:].isdigit():
+        return True
+
+    return False
+
+
 if __name__ == '__main__':
 
     fdn_root = pathlib.Path(__file__).parent / '..'
@@ -80,15 +92,13 @@ if __name__ == '__main__':
     card_text = []
     for par in document.paragraphs:
         partext = par.text.strip('\n')
-        if partext.isdigit():
+        if is_card_title(partext):
             if len(card_text) != 0:
                 card_text = '\n\n'.join(card_text)
                 cards[card_name] = card_text
                 card_text = []
             card_name = partext
         elif card_name is not None:
-            #if partext.startswith('R: '):
-            #    partext = '---\n**R:**' + partext[2:]+'\n\n---'
             card_text.append(partext)
 
     fdn_src = fdn_root / 'cards'

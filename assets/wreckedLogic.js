@@ -21,6 +21,9 @@ function updateTokens(currentCard) {
             tokenStorage['thermallance'] = true;
             break;
         default:
+            if (currentCard.startsWith('L')) {
+                tokenStorage['lower'] = true;
+            }
             break;
     }
 }
@@ -95,6 +98,11 @@ function onSearchCard() {
   cardNumber = validationResult['cardNumber'];
   cardText = validationResult['cardText'];
 
+  // Check if it's the first lower level card
+  if (!wreckedStorage['tokens']['lower'] && cardNumber.startsWith('L')) {
+      cardText = wreckedStorage['text']['L00'].concat(cardText);
+  } 
+
   // Prepare the card text
   let cardTextInnerHTML = [];
   for (let i = 0; i < cardText.length; i++) {
@@ -113,7 +121,6 @@ function onSearchCard() {
     cardTextInnerHTML.push(parFormatted);
   }
   cardTextInnerHTML = cardTextInnerHTML.join('\n');
-
 
   // Change the card title and text
   swapCardWithTransition(cardNumber, cardTextInnerHTML);
