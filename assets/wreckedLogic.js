@@ -60,6 +60,39 @@ function validateCardNumber(cardNumber) {
 }
 
 
+function renderCardText(cardParas) {
+
+  // Prepare the card text
+  let cardTextInnerHTML = [];
+  for (let i = 0; i < cardParas.length; i++) {
+    let par = cardParas[i];
+    let parClass = "cardTextNormal";
+    if (par.startsWith('R:')) {
+      parClass = "cardTextRule";
+    } else if (par.startsWith('(Q')) {
+      parClass = "cardTextQuestion";
+    } else if (par.startsWith('(A-Y')) {
+      parClass = "cardTextAnswerYes";
+    }
+    let parFormatted = '<p class="' + parClass + '">';
+    if (par.startsWith('R:')) {
+      parFormatted += '<strong>RULE:</strong>' + par.slice(2)
+    } else if (par.startsWith('(Q):')) {
+      parFormatted += '<strong>Question:</strong>' + par.slice(4)
+    } else if (par.startsWith('(A')) {
+      parFormatted += par.slice(6)  // e.g. (A-Y): bla bla
+    } else {
+      parFormatted += par;
+    }
+    parFormatted += '</p>';
+    cardTextInnerHTML.push(parFormatted);
+  }
+  cardTextInnerHTML = cardTextInnerHTML.join('\n');
+
+  return cardTextInnerHTML;
+}
+
+
 function swapCardWithTransition(cardNumber, cardTextInnerHTML) {
   let delay = 0;
   var cardApp = document.getElementById("cardApp");
@@ -96,31 +129,15 @@ function onSearchCard() {
     return;
   }
   cardNumber = validationResult['cardNumber'];
-  cardText = validationResult['cardText'];
+  let cardParagraphs = validationResult['cardText'];
 
   // Check if it's the first lower level card
   if (!wreckedStorage['tokens']['lower'] && cardNumber.startsWith('L')) {
-      cardText = wreckedStorage['text']['L00'].concat(cardText);
+      cardParagraphs = wreckedStorage['text']['L00'].concat(cardParagraphs);
   } 
 
-  // Prepare the card text
-  let cardTextInnerHTML = [];
-  for (let i = 0; i < cardText.length; i++) {
-    let par = cardText[i];
-    let parClass = "cardTextNormal";
-    if (par.startsWith('R:')) {
-      parClass = "cardTextRule";
-    }
-    let parFormatted = '<p class="' + parClass + '">';
-    if (par.startsWith('R:')) {
-      parFormatted += '<strong>RULE:</strong>' + par.slice(2)
-    } else {
-      parFormatted += par;
-    }
-    parFormatted += '</p>';
-    cardTextInnerHTML.push(parFormatted);
-  }
-  cardTextInnerHTML = cardTextInnerHTML.join('\n');
+  // Render proper html for the card text paragraphs
+  let cardTextInnerHTML = renderCardText(cardParagraphs);
 
   // Change the card title and text
   swapCardWithTransition(cardNumber, cardTextInnerHTML);
